@@ -3,6 +3,7 @@
         "facemesh",
         "fasemesh",
         "mediapipe",
-        "tfjs"
+        "tfjs",
+        "webfonts"
     ]
 }
