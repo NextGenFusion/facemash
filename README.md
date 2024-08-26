@@ -10,7 +10,7 @@ This project is a React application that utilizes [MediaPipe](https://mediapipe.
 
 ## Demo
 
-[Demo link](https://nextgenfusion.github.io/facemash/)
+[Demo link](https://nextgenfusion.github.io/facemesh/)
 
 
 ## Installation
