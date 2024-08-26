@@ -28,3 +28,4 @@ Follow the instructions below to install and run the project locally.
 ```bash
 git clone https://github.com/NextGenFusion/facemesh.git
 cd facemesh
+npm start
