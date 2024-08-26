@@ -3,6 +3,8 @@ import * as Facemesh from "@mediapipe/face_mesh";
 import { FaceMesh } from "@mediapipe/face_mesh";
 import React, { useEffect, useRef } from "react";
 import Webcam from "react-webcam";
+
+
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -115,7 +117,7 @@ function App() {
             left: 0,
             right: 0,
             textAlign: "center",
-            zindex: 9,
+            zIndex: 9,
             width: 640,
             height: 480,
           }}
