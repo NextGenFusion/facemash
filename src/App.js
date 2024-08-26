@@ -1,17 +1,16 @@
 import * as cam from "@mediapipe/camera_utils";
 import * as Facemesh from "@mediapipe/face_mesh";
 import { FaceMesh } from "@mediapipe/face_mesh";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
-
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const cameraRef = useRef(null);
   const connect = window.drawConnectors;
-  var camera = null;
-  function onResults(results) {
-    // const video = webcamRef.current.video;
+
+  const onResults = useCallback((results) => {
     const videoWidth = webcamRef.current.video.videoWidth;
     const videoHeight = webcamRef.current.video.videoHeight;
 
@@ -57,10 +56,8 @@ function App() {
       }
     }
     canvasCtx.restore();
-  }
-  // }
+  }, [connect]);
 
-  // setInterval(())
   useEffect(() => {
     const faceMesh = new FaceMesh({
       locateFile: (file) => {
@@ -80,16 +77,23 @@ function App() {
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null
     ) {
-      camera = new cam.Camera(webcamRef.current.video, {
+      cameraRef.current = new cam.Camera(webcamRef.current.video, {
         onFrame: async () => {
           await faceMesh.send({ image: webcamRef.current.video });
         },
         width: 640,
         height: 480,
       });
-      camera.start();
+      cameraRef.current.start();
     }
-  }, []);
+
+    return () => {
+      if (cameraRef.current) {
+        cameraRef.current.stop();
+      }
+    };
+  }, [onResults]); // onResults is now stable and won't cause unnecessary re-runs
+
   return (
     <center>
       <div className="App">
@@ -106,7 +110,7 @@ function App() {
             width: 640,
             height: 480,
           }}
-        />{" "}
+        />
         <canvas
           ref={canvasRef}
           className="output_canvas"
